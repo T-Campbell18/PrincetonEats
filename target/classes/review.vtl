@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Princeton Eats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="57x57" href="pics/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="pics/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="pics/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="pics/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="pics/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="pics/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="pics/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="pics/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="pics/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="pics/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="pics/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="pics/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="pics/favicon-16x16.png">
+  <link rel="manifest" href="pics/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="pics/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+		.rating-header {
+			margin-top: -10px;
+			margin-bottom: 10px;
+		}
+		</style>
+    <style>
+      a:link {
+          color: black;
+          text-decoration: none;
+      }
+
+      /* visited link */
+      a:visited {
+          color: black;
+          text-decoration: none;
+      }
+
+      /* mouse over link */
+      a:hover {
+          color: orange;
+          text-decoration: none;
+      }
+
+      body {
+      background-color: rgba(45, 127, 209, 0.25);
+      }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132216002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132216002-1');
+</script>
+
+  </head>
+  <body>
+
+    <script>
+
+	jQuery(document).ready(function($){
+
+		$(".btnrating").on('click',(function(e) {
+
+		var previous_value = $("#selected_rating").val();
+
+		var selected_value = $(this).attr("data-attr");
+		$("#selected_rating").val(selected_value);
+
+		$(".selected-rating").empty();
+		$(".selected-rating").html(selected_value);
+
+		for (i = 1; i <= selected_value; ++i) {
+		$("#rating-star-"+i).toggleClass('btn-warning');
+		$("#rating-star-"+i).toggleClass('btn-default');
+		}
+
+		for (ix = 1; ix <= previous_value; ++ix) {
+		$("#rating-star-"+ix).toggleClass('btn-warning');
+		$("#rating-star-"+ix).toggleClass('btn-default');
+		}
+
+		}));
+
+
+	});
+	</script>
+
+<br>
+<a href="restaurant?r=${r}"><h1 class="bg-primary">&nbsp&nbsp${r}</h1></a>
+
+<div class="container">
+
+<div class="mx-auto">
+
+
+  <form action="restaurant?r=${r}" method="post">
+    <input type="hidden" name="name" value="${username}">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<div class="form-group" id="rating-ability-wrapper" required>
+			    <label class="control-label" for="rating">
+			    <span class="field-label-info"></span>
+			    <input type="hidden" id="selected_rating" value="0" name="selected_rating" required>
+			    </label>
+			    <h2 class="bold rating-header" style="">
+			    <span class="selected-rating">0</span><small> / 5</small>
+			    </h2>
+			    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1" id="rating-star-1">
+			        <i class="fa fa-star" aria-hidden="true"></i>
+			    </button>
+			    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="2" id="rating-star-2">
+			        <i class="fa fa-star" aria-hidden="true"></i>
+			    </button>
+			    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="3" id="rating-star-3">
+			        <i class="fa fa-star" aria-hidden="true"></i>
+			    </button>
+			    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="4" id="rating-star-4">
+			        <i class="fa fa-star" aria-hidden="true"></i>
+			    </button>
+			    <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5" id="rating-star-5">
+			        <i class="fa fa-star" aria-hidden="true"></i>
+			    </button>
+			</div>
+
+      <div class="form-group">
+        <textarea class="form-control" id="textarea" name="review"rows="5" placeholder="Leave a review..." required></textarea>
+      </div>
+
+      <input type="submit"class="btn btn-primary" value="Submit">
+      <button class="btn btn-primary">
+        <a href="restaurant?r=${r}" onclick="return confirm('Are you sure you want to cancel? \nPress OK to cancel');">Cancel</a>
+      </button>
+
+
+    </form>
+    </div>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Princeton Eats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="57x57" href="pics/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="pics/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="pics/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="pics/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="pics/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="pics/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="pics/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pics/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="pics/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="pics/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="pics/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="pics/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="pics/favicon-16x16.png">
+<link rel="manifest" href="pics/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="pics/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+
+  <link rel="stylesheet" href="dist/css/leaflet.extra-markers.min.css">
+  <script src="dist/js/leaflet.extra-markers.min.js"></script>
+
+  <style>
+  .ui-autocomplete{z-index: 2000;}
+  </style>
+
+<style>
+/* Add a light pink to background */
+  body {
+  background-color: rgba(255, 182, 193, 0.1);
+  }
+  .card {
+  align: center;
+  display: inline-block;
+  width: 18rem;
+  }
+
+  .card-container {
+  align: top;
+  display: inline-block;
+  padding: 1rem;
+  }
+  </style>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132216002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132216002-1');
+</script>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-light bg-secondary justify-content-between">
+    <a href="index" class="navbar-brand">Princeton Eats</a>
+    <button class="btn btn-primary my-2 my-sm-0" onclick="location.href = 'addPage'">Suggest a New Restaurant</button>
+    <form class="form-inline" action="searchResults" method="get" autocomplete="off">
+      <input id="tags" class="form-control" type="text" name="search" placeholder="Search..">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+
+  <br>
+<center>
+  <div class="container">
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox"  id="p1" hidden> $
+      </label>
+      <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox"  id="p2" hidden> $$
+      </label>
+      <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox"   id="p3" hidden>$$$
+      </label>
+    </div>
+    <div class="btn-group" data-toggle="buttons">
+      <label class="btn btn-outline-secondary" id="w1"onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox" id="wifi" hidden>Free Wifi
+      </label>
+
+      <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox" id="d" hidden>Delivers
+      </label>
+
+      <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="checkbox" id="to" onclick="myFunction()" hidden>Takeout
+      </label>
+    </div>
+    <label for="sortby">Sort By</label>
+    <div class="btn-group" data-toggle="buttons" id="sortby">
+        <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="radio" name="options" id="rating" checked hidden> Rating
+        </label>
+        <label class="btn btn-outline-secondary" onclick="setTimeout(function(){ myFunction(); }, 10);">
+          <input type="radio" name="options" id="distance" hidden> Distance
+        </label>
+    </div>
+
+    <label class="btn btn-danger" onclick="setTimeout(function(){ myFunction2(); }, 10);">Clear Filters</label>
+  </div>
+</center>
+<br>
+
+
+
+<p id="rests">${s}</p>
+
+<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+
+<script>
+
+
+    function setup()
+    {
+      myFunction2();
+    }
+
+   function handleResponse(response)
+   {
+      $('#rests').html(response);
+   }
+
+   let date = new Date();
+   let seed = date.getSeconds();
+   let request;
+
+   function myFunction()
+   {
+      var cbp1 = document.getElementById("p1");
+      var cbp2 = document.getElementById("p2");
+      var cbp3 = document.getElementById("p3");
+      var cbd = document.getElementById("d");
+      var cbto = document.getElementById("to");
+      var cbwifi = document.getElementById("wifi");
+      var p1 = 0;
+      var p2 = 0;
+      var p3 = 0;
+      var d = 0;
+      var to = 0;
+      var wifi = 0;
+
+      if (cbp1.checked == true){
+        p1 =1;
+      }
+      if (cbp2.checked == true){
+        p2=1;
+      }
+      if (cbp3.checked == true){
+        p3 =1;
+      }
+      if (cbd.checked == true){
+        d =1;
+      }
+      if (cbto.checked == true){
+        to =1;
+      }
+      if (cbwifi.checked == true){
+        wifi =1;
+      }
+      var sort = 0;
+      if(document.getElementById('rating').checked){
+        sort = 0;
+      }
+      if(document.getElementById('distance').checked){
+        sort = 1;
+      }
+
+
+
+      let messageId =
+         Math.floor(Math.random(seed) * 1000000) + 1;
+      let url = '/searchPage?search=' + '${s}' + '&p1='+  p1.toString() + '&p2='+  p2.toString() + '&p3='+  p3.toString()
+         + '&d='+  d.toString() + '&to='+  to.toString() + '&wifi='+  wifi.toString()
+         + '&sort='+  sort.toString()  +'&messageId=' + messageId;
+      if (request != null)
+         request.abort();
+      request = $.ajax(
+         {
+            type: "GET",
+            url: url,
+            success: handleResponse
+         }
+      );
+   }
+
+      function myFunction2()
+      {
+         var p1 = 0;
+         var p2 = 0;
+         var p3 = 0;
+         var d = 0;
+         var to = 0;
+         var wifi = 0;
+         var sort = 0;
+
+         document.getElementById("p1").checked = false;
+         document.getElementById("p2").checked = false;
+         document.getElementById("p3").checked = false;
+         document.getElementById("d").checked = false;
+         document.getElementById("to").checked = false;
+         document.getElementById("wifi").checked = false;
+         document.getElementById("rating").checked = true;
+         document.getElementById("distance").checked = false;
+
+
+         $('label.active').removeClass('active');
+
+
+
+
+
+
+         let messageId =
+            Math.floor(Math.random(seed) * 1000000) + 1;
+         let url = '/searchPage?search=' + '${s}' + '&p1='+  p1.toString() + '&p2='+  p2.toString() + '&p3='+  p3.toString()
+            + '&d='+  d.toString() + '&to='+  to.toString() + '&wifi='+  wifi.toString()
+            + '&sort='+  sort.toString()  +'&messageId=' + messageId;
+         if (request != null)
+            request.abort();
+         request = $.ajax(
+            {
+               type: "GET",
+               url: url,
+               success: handleResponse
+            }
+         );
+      }
+
+   $('document').ready(setup);
+
+</script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+
+<script>
+$( function() {
+  var availableTags = ["American", "Bakeries", "Barbeque", "Bars", "Brasseries", "Breakfast", "Breakfast/brunch", "Brunch", "Bubble tea", "Burgers", "Cafes", "Caterers", "Cheese shops", "Chinese", "Cocktail bars", "Coffee", "Coffee roasteries", "Creperies", "Cupcakes",
+   "Deli", "Desserts", "Diners", "Empanadas", "Fast Food", "French", "Frozen yogurt", "Gluten-free", "Greek", "Grocery", "Halal", "Health markets", "Hotels", "Ice cream", "Indian", "Italian", "Japanese", "Juice bars", "Korean",
+   "Mediterranean", "Mexican", "Middle eastern", "Noodles", "Pizza", "Pubs", "Ramen", "Salad", "Sandwiches", "Seafood", "Seafood markets", "Shaved ice", "Small plates", "Smoothies", "Soup", "Spanish", "Sports bars", "Steakhouses", "Sushi bars",
+    "Tapas", "Tapas/small plates", "Tea", "Vegan", "Wine bars","Hoagie Haven","Tacoria","Blue Point Grill","Chennai Chimney","Lan Ramen","Pizza Den","Mediterra Restaurant","The Peacock Inn","Meatheadz LLC","Yankee Doodle Tap Room at the Nassau Inn","Metro North","Mistral","Agricola Eatery",
+    "Cargot Brasserie","The Dinky Bar and Kitchen","Jammin Crepes","Teresa Caffe","Witherspoon Grill","Mamouns Falafel","Rojos Roastery","Elements","Zacs Burger","Bobbys Burger Palace","The Turning Point of Princeton","LiLLiPiES Bakery ","The Bent Spoon","Halo Pub","Small World Coffee","Thomas Sweet Ice Cream",
+    "KBG Korean BBQ and Grill","Nassau Street Seafood and Produce Company","Olives Deli and Bakery","Winberies Restaurant and Bar","Brick House Tavern and Tap","PJs Pancake House","House of Cupcakes","Jules Thin Crust","Salt Creek Grille","Olssons Fine Foods",
+    "Cross Culture","Nomad Pizza","The Chef Pastry Shop","Contes Pizza and Bar","Despana","Tortugas Mexican Village","DAngelo Italian Market","Chucks Spring Street Cafe","Ajiten Princeton Japanese Restaurant","Sakura Express","La Mezzaluna","Whole Earth Center","Efes Mediterranean Grill",
+    "Tandoori Bite Indian Cuisine","Tiger Noodles","Ivy Inn","QDOBA Mexican Eats","Say Cheez Cafe","Kung Fu Tea","Local Greek","Fruity Yogurt","Princeton Soup and Sandwich","Alchemist and Barrister","Chapin Guatemalan and Mexican Restaurant","Chez Alice Cafe and Bakery"];
+    $( "#tags" ).autocomplete({
+        source: function(request, response) {
+          var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+          response(results.slice(0, 10));
+      }
+      });
+    } );
+</script>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Princeton Eats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="57x57" href="pics/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="pics/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="pics/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="pics/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="pics/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="pics/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="pics/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pics/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="pics/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="pics/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="pics/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="pics/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="pics/favicon-16x16.png">
+<link rel="manifest" href="pics/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="pics/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <style>
+  .ui-autocomplete{z-index: 2000;}
+  </style>
+
+  <style>
+  .checked {
+    color: yellow;
+  }
+  </style>
+  <style>
+			.map {
+        height: 400px;
+			}
+		</style>
+<style>
+/* Add a light blue to background */
+  body {
+  background-color: rgba(176, 224, 230, 0.2);
+  width: 100%;
+  }
+  .animated {
+    -webkit-transition: height 0.2s;
+    -moz-transition: height 0.2s;
+    transition: height 0.2s;
+}
+
+.stars
+{
+    margin: 20px 0;
+    font-size: 24px;
+    color: #d17581;
+}
+  </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132216002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132216002-1');
+</script>
+
+</head>
+<body>
+
+  <nav class="navbar navbar-light bg-secondary justify-content-between">
+    <a href="index" class="navbar-brand">Princeton Eats</a>
+    <button class="btn btn-primary my-2 my-sm-0" onclick="location.href = 'addPage'">Suggest a New Restaurant</button>
+    <form class="form-inline" action="searchResults" method="get" autocomplete="off">
+      <input id="tags" class="form-control" type="text" name="search" placeholder="Search..">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img class="card-img-top" src="pics/${rest.getPic()}" alt="Card image cap">
+      <div class="card-body">
+        <h3 class="card-title">${rest.getName()}</h3>
+        #if (${rating} != 0)
+        <h5 class="card-title">${rating}</h5>
+        #end
+        <p>#foreach (${t} in ${tags}) <a href="searchResults?search=${t}">${t}</a> #if( $foreach.hasNext ) - #end #end</p>
+        <p class="card-text">${rest.getAddress()}</p>
+        <p class="card-text">${rest.getPhone()}</p>
+        #if (${rest.getWeb()})
+        <p class="card-text"><a href="${rest.getWeb()}" target="_blank" class="rest">WebSite</a></p>
+        #end
+        #if (${rest.getMenu()})
+        <p class="card-text"><a href="${rest.getMenu()}" target="_blank" class="rest">Menu</a></p>
+        #end
+      </div>
+    </div>
+    <div class="col">
+      <div class="col">
+      <div id="mapid" style="height: 400px;"></div>
+    </div>
+  </div>
+</div>
+
+
+<br>
+
+
+<script>
+
+  	var mymap = L.map('mapid');
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+  		maxZoom: 18,
+  		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+  			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+  			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  		id: 'mapbox.streets'
+  	}).addTo(mymap);
+
+    var markerArray = [];
+    markerArray.push(L.marker([${lat}, ${lon}]));
+
+
+    var lat2 = 40.3467;
+    var lon2 = -74.6554;
+
+    markerArray.push(L.marker([lat2, lon2]));
+
+
+
+    var group = L.featureGroup(markerArray);
+    mymap.fitBounds(group.getBounds(), {padding: [50,50]});
+
+
+
+    function getD(){
+      L.Routing.control({
+      waypoints: [
+        L.latLng(lat2, lon2),
+        L.latLng(${lat}, ${lon})
+      ]
+    }).addTo(mymap);
+    }
+
+    L.marker([lat2,lon2]).addTo(mymap);
+  	L.marker([${lat},${lon}]).addTo(mymap).bindPopup("${rest.getName()}");
+
+    var popup = L.popup();
+
+</script>
+
+<center>
+  <button type="button" class="btn btn-secondary"onclick="location.href = 'review?r=${rest.getName()}'">Write a Review!</button>
+  <button class="btn btn-success"onclick="getD()">Directions</button>
+</center>
+<br>
+<br>
+
+
+
+
+
+<div class="container">
+
+  <h3 class="mx-auto">Similar Restaurants</h3>
+
+  <div class="row">
+    #foreach (${r} in ${similar})
+    <div class="col-md-2">
+      <a href="restaurant?r=${r.getName()}">
+      <img class="card-img-top" src="pics/${r.getPic()}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title align-self-end">${r.getName()}</h5>
+        </div>
+      </a>
+    </div>
+    #end
+  </div>
+</div>
+
+
+
+<br>
+  <div class="container">
+    <h3>Reviews</h3>
+    #foreach (${r} in ${reviews})
+    <div class="card border-primary mb-3 container">
+      <div class="card-header">
+        ${r.getName()}
+      </div>
+      <div class="card-body">
+        #if (${r.getRating()} == 5)
+        <h3>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+        </h3>
+        #end
+
+        #if (${r.getRating()} == 4)
+        <h3>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+        </h3>
+        #end
+
+        #if (${r.getRating()} == 3)
+        <h3>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </h3>
+        #end
+
+        #if (${r.getRating()} == 2)
+        <h3>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </h3>
+        #end
+
+        #if (${r.getRating()} == 1)
+        <h3>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </h3>
+        #end
+
+        #if (${r.getRating()} == 0)
+        <h3>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </h3>
+        #end
+        <p class="card-text">${r.getReview()}</p>
+      </div>
+    </div>
+    #end
+  </div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.2/js/bootstrap.js"></script>
+
+<script>
+$( function() {
+  var availableTags = ["American", "Bakeries", "Barbeque", "Bars", "Brasseries", "Breakfast", "Breakfast/brunch", "Brunch", "Bubble tea", "Burgers", "Cafes", "Caterers", "Cheese shops", "Chinese", "Cocktail bars", "Coffee", "Coffee roasteries", "Creperies", "Cupcakes",
+   "Deli", "Desserts", "Diners", "Empanadas", "Fast Food", "French", "Frozen yogurt", "Gluten-free", "Greek", "Grocery", "Halal", "Health markets", "Hotels", "Ice cream", "Indian", "Italian", "Japanese", "Juice bars", "Korean",
+   "Mediterranean", "Mexican", "Middle eastern", "Noodles", "Pizza", "Pubs", "Ramen", "Salad", "Sandwiches", "Seafood", "Seafood markets", "Shaved ice", "Small plates", "Smoothies", "Soup", "Spanish", "Sports bars", "Steakhouses", "Sushi bars",
+    "Tapas", "Tapas/small plates", "Tea", "Vegan", "Wine bars","Hoagie Haven","Tacoria","Blue Point Grill","Chennai Chimney","Lan Ramen","Pizza Den","Mediterra Restaurant","The Peacock Inn","Meatheadz LLC","Yankee Doodle Tap Room at the Nassau Inn","Metro North","Mistral","Agricola Eatery",
+    "Cargot Brasserie","The Dinky Bar and Kitchen","Jammin Crepes","Teresa Caffe","Witherspoon Grill","Mamouns Falafel","Rojos Roastery","Elements","Zacs Burger","Bobbys Burger Palace","The Turning Point of Princeton","LiLLiPiES Bakery ","The Bent Spoon","Halo Pub","Small World Coffee","Thomas Sweet Ice Cream",
+    "KBG Korean BBQ and Grill","Nassau Street Seafood and Produce Company","Olives Deli and Bakery","Winberies Restaurant and Bar","Brick House Tavern and Tap","PJs Pancake House","House of Cupcakes","Jules Thin Crust","Salt Creek Grille","Olssons Fine Foods",
+    "Cross Culture","Nomad Pizza","The Chef Pastry Shop","Contes Pizza and Bar","Despana","Tortugas Mexican Village","DAngelo Italian Market","Chucks Spring Street Cafe","Ajiten Princeton Japanese Restaurant","Sakura Express","La Mezzaluna","Whole Earth Center","Efes Mediterranean Grill",
+    "Tandoori Bite Indian Cuisine","Tiger Noodles","Ivy Inn","QDOBA Mexican Eats","Say Cheez Cafe","Kung Fu Tea","Local Greek","Fruity Yogurt","Princeton Soup and Sandwich","Alchemist and Barrister","Chapin Guatemalan and Mexican Restaurant","Chez Alice Cafe and Bakery"];
+    $( "#tags" ).autocomplete({
+        source: function(request, response) {
+          var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+          response(results.slice(0, 10));
+      }
+      });
+    } );
+</script>
+
+</body>
+</html>

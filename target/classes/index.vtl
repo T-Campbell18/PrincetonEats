@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Princeton Eats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" sizes="57x57" href="pics/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="pics/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="pics/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="pics/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="pics/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="pics/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="pics/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="pics/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="pics/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="pics/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="pics/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="pics/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="pics/favicon-16x16.png">
+<link rel="manifest" href="pics/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="pics/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+
+
+  <style>
+    a:link {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* Add slight grey color to the box below picture */
+    .card-body {
+    background-color: rgba(220, 220, 220, 0.5);
+    }
+
+    /* visited link */
+    a:visited {
+        color: black;
+        text-decoration: none;
+    }
+
+    /* mouse over link */
+    a:hover {
+        color: orange;
+        text-decoration: none;
+    }
+    body {
+      background-image: url('pics/title.gif');
+      background-size: cover;
+
+  }
+
+  </style>
+
+
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132216002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132216002-1');
+</script>
+
+
+</head>
+<body>
+  <header></header>
+  <div class="w3-container w3-orange">
+    <center><h1>Princeton Eats</h1></center>
+  </div>
+<br>
+<div class="container">
+  <center>
+    <form action="searchResults" method="get" autocomplete="off" class="form-inline col-md-4 col-md-offset-4">
+          <div>
+              <button type="submit" class="btn btn-primary">Search</button></td>
+              <input class="form-control mr-sm-2" type="text" id="tags" name="search" placeholder="Search for Restaurants">
+          </div>
+    </form>
+  </center>
+</div>
+<br>
+<div class="container">
+  <center>
+    <button onclick="location.href = 'searchResults?search=pizza'" class="btn btn-secondary">Pizza</button>
+    <button onclick="location.href = 'searchResults?search=burgers'" class="btn btn-secondary">Burgers</button>
+    <button onclick="location.href = 'searchResults?search=breakfast/brunch'" class="btn btn-secondary">Breakfast & Brunch</button>
+    <button onclick="location.href = 'searchResults?search=fast food'" class="btn btn-secondary">Fast Food</button>
+    <button onclick="location.href = 'searchResults?search=italian'" class="btn btn-secondary">Italian</button>
+    <button onclick="location.href = 'searchResults?search=ice cream'" class="btn btn-secondary">Ice Cream</button>
+    <button onclick="location.href = 'searchResults?search='" class="btn btn-secondary">All</button>
+  </center>
+</div>
+
+<br>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="card-deck mx-auto">
+
+      <a href="restaurant?r=${rest.getName()}">
+      <div class="card" style="width: 26rem;">
+      <img class="card-img-top img-fluid" src="pics/${rest.getPic()}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">${rest.getName()}</h5>
+          <p class="card-text">Best Pick</p>
+        </div>
+      </div>
+      </a>
+
+
+      <a href="restaurant?r=${rest2.getName()}">
+      <div class="card" style="width: 26rem;">
+      <img class="card-img-top img-fluid" src="pics/${rest2.getPic()}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">${rest2.getName()}</h5>
+          <p class="card-text">Random Pick</p>
+        </div>
+      </div>
+      </a>
+
+
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  var availableTags = ["American", "Bakeries", "Barbeque", "Bars", "Brasseries", "Breakfast", "Breakfast/Brunch", "Brunch", "Bubble Tea", "Burgers", "Cafes", "Caterers", "Cheese Shops", "Chinese", "Cocktail Bars", "Coffee", "Coffee Roasteries", "Creperies", "Cupcakes",
+   "Deli", "Desserts", "Diners", "Empanadas", "Fast Food", "French", "Frozen Yogurt", "Gluten-free", "Greek", "Grocery", "Halal", "Health Markets", "Hotels", "Ice Cream", "Indian", "Italian", "Japanese", "Juice Bars", "Korean",
+   "Mediterranean",  "Mexican", "Middle Eastern", "Noodles", "Pizza", "Pubs", "Ramen", "Salad", "Sandwiches", "Seafood", "Seafood Markets", "Shaved Ice", "Small Plates", "Smoothies", "Soup", "Spanish", "Sports Bars", "Steakhouses", "Sushi Bars",
+    "Tapas", "Tapas/Small plates", "Tea", "Vegan", "Wine Bars","Hoagie Haven","Tacoria","Blue Point Grill","Chennai Chimney","Lan Ramen","Pizza Den","Mediterra Restaurant","The Peacock Inn","Meatheadz LLC","Yankee Doodle Tap Room at the Nassau Inn","Metro North","Mistral","Agricola Eatery",
+    "Cargot Brasserie","The Dinky Bar and Kitchen","Jammin Crepes","Teresa Caffe","Witherspoon Grill","Mamouns Falafel","Rojos Roastery","Elements","Zacs Burger","Bobbys Burger Palace","The Turning Point of Princeton","LiLLiPiES Bakery ","The Bent Spoon","Halo Pub","Small World Coffee","Thomas Sweet Ice Cream",
+    "KBG Korean BBQ and Grill","Nassau Street Seafood and Produce Company","Olives Deli and Bakery","Winberies Restaurant and Bar","Brick House Tavern and Tap","PJs Pancake House","House of Cupcakes","Jules Thin Crust","Salt Creek Grille","Olssons Fine Foods",
+    "Cross Culture","Nomad Pizza","The Chef Pastry Shop","Contes Pizza and Bar","Despana","Tortugas Mexican Village","DAngelo Italian Market","Chucks Spring Street Cafe","Ajiten Princeton Japanese Restaurant","Sakura Express","La Mezzaluna","Whole Earth Center","Efes Mediterranean Grill",
+    "Tandoori Bite Indian Cuisine","Tiger Noodles","Ivy Inn","QDOBA Mexican Eats","Say Cheez Cafe","Kung Fu Tea","Local Greek","Fruity Yogurt","Princeton Soup and Sandwich","Alchemist and Barrister","Chapin Guatemalan and Mexican Restaurant","Chez Alice Cafe and Bakery"];
+  $( "#tags" ).autocomplete({
+    source: function(request, response) {
+      var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+      response(results.slice(0, 10));
+  }
+  });
+} );
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Princeton Eats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="57x57" href="pics/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="pics/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="pics/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="pics/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="pics/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="pics/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="pics/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="pics/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="pics/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="pics/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="pics/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="pics/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="pics/favicon-16x16.png">
+  <link rel="manifest" href="pics/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="pics/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<style>
+		.rating-header {
+			margin-top: -10px;
+			margin-bottom: 10px;
+		}
+		</style>
+    <style>
+      a:link {
+          color: black;
+          text-decoration: none;
+      }
+
+      /* visited link */
+      a:visited {
+          color: black;
+          text-decoration: none;
+      }
+
+      /* mouse over link */
+      a:hover {
+          color: orange;
+          text-decoration: none;
+      }
+
+      body {
+      background-color: rgba(45, 127, 209, 0.25);
+      }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132216002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132216002-1');
+</script>
+
+</head>
+<body>
+
+<br>
+<h1 class="bg-primary">&nbsp&nbspAdd a New Restaurant</h1>
+<br>
+<br>
+
+<div class="container">
+  <div class="mx-auto">
+    <form action="suggest" method="post">
+      <div class="form-group">
+      <input class="form-control" name="name" id="name" placeholder="Restaurant Name" required>
+      <small id="help" class="form-text text-muted">Restaurant must be in range of Princeton University.</small>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+    <button onclick="goBack();" class="btn btn-outline-primary">Cancel</button>
+  </div>
+</div>
+
+</body>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
+
+</html>
